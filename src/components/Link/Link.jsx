@@ -23,12 +23,9 @@ const LinkSecundario = styled.a`
     }
 `
 export const Link = ({ children, variante = 'primario' }) => {
-    if (variante === 'primario') {
-        return <LinkPrimario variante={variante}>
-            {children}
-        </LinkPrimario>
-    }
-    return <LinkSecundario variante={variante}>
-        {children}
-    </LinkSecundario>
+    return (
+        variante === 'primario' 
+        ? <LinkPrimario variante={variante}>{children}</LinkPrimario>
+        : <LinkSecundario variante={variante}>{children}</LinkSecundario>
+    );
 }
