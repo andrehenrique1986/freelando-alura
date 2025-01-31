@@ -3,30 +3,11 @@ import { useState } from "react"
 
 
 
-export const ItemListaSuspensaEstilizado = styled.li`
-    padding: ${props => props.theme.espacamentos.xs} 0;
-    text-align: center;
-   
-    cursor: pointer;       
-    &:last-child {
-        border: none;
-    }
-    color: ${props => props.focoAtivo ? props.theme.cores.focus : 'inherit'};
-    &:hover {
-        color: ${props => props.theme.cores.focus};
-    }
-`
 const ListaSuspensaEstilizada = styled.ul`
     position: absolute;
     top: 100%;
     left: 0;
     right: 0;
-    border-bottom: 1px solid ${props => props.theme.cores.neutras.c};
-    margin-top: ${props => props.theme.espacamentos.xs};
-    margin-bottom: ${props => props.theme.espacamentos.s};
-    font-weight: 400;
-    font-size: 20px;
-    line-height: 24px;
     background-color: ${props => props.theme.cores.branco};
     z-index: 1;
     border: 1px solid ${props => props.theme.cores.neutras.a};
@@ -38,15 +19,32 @@ const ListaSuspensaEstilizada = styled.ul`
     list-style: none;
 `;
 
+const ItemListaSuspensaEstilizado = styled.li`
+    padding: ${props => props.theme.espacamentos.xs} 0;
+    text-align: center;
+    border-bottom: 1px solid ${props => props.theme.cores.neutras.c};
+    cursor: pointer;       
+    &:last-child {
+        border: none;
+    }
+    color: ${props => props.focoAtivo ? props.theme.cores.focus : 'inherit'};
+    &:hover {
+        color: ${props => props.theme.cores.focus};
+    }
+`;
+
+
 
 const LabelEstilizada = styled.label`
     display: block;
     width: 100%;
+    margin: ${props => props.theme.espacamentos.xs};
     box-sizing: border-box;
     font-weight: 400;
     font-size: 20px;
     line-height: 24px;
     position: relative;
+
 `
 
 const BotaoEstilizado = styled.button`
@@ -73,53 +71,51 @@ const BotaoEstilizado = styled.button`
     }
 `
 
-
-
-
 export const ListaSupensa = ({ titulo, opcoes }) => {
-    const [estaAberta, alternarVisibilidade] = useState(false);
+    const [estaAberta, alternarVisibilidade] = useState(false)
+
     const [opcaoFocada, setOpcaoFocada] = useState(null);
     const [opcaoSelecionada, setOpcaoSelecionada] = useState(null);
 
     const manipularTeclaDoTeclado = (evento) => {
-        alternarVisibilidade(true);
+        alternarVisibilidade(true)
         switch (evento.key) {
             case 'ArrowDown':
                 evento.preventDefault();
                 setOpcaoFocada(focoAntigo => {
-                    if (focoAntigo == null){
+                    if (focoAntigo == null) {
                         return 0;
                     }
-                    if (focoAntigo === (opcoes.length -1)){
-                        return opcoes.length -1;
+                    if (focoAntigo === (opcoes.length - 1)) {
+                        return opcoes.length - 1
                     }
-                    return focoAntigo +=1;
+                    return focoAntigo += 1
                 })
                 break;
-                case 'ArrowUp':
+            case 'ArrowUp':
                 evento.preventDefault();
                 setOpcaoFocada(focoAntigo => {
-                    if (!focoAntigo){
+                    if (!focoAntigo) {
                         return 0;
                     }
-                    return focoAntigo -=1;
+                    return focoAntigo -= 1
                 })
                 break;
                 case 'Enter':
                     evento.preventDefault();
-                    setOpcaoFocada(null);
-                    alternarVisibilidade(false);
-                    setOpcaoSelecionada(opcoes[opcaoFocada]);
+                    setOpcaoFocada(null)
+                    alternarVisibilidade(false)
+                    setOpcaoSelecionada(opcoes[opcaoFocada])
                     break;
                 case 'Tab':
-                    evento.preventDefault();
-                    setOpcaoFocada(null);
-                    alternarVisibilidade(false);
-                break;
+                    setOpcaoFocada(null)
+                    alternarVisibilidade(false)
+                    break;
                 case 'Escape':
-                setOpcaoFocada(null);
-                alternarVisibilidade(false);
-                break;
+                    evento.preventDefault();
+                    setOpcaoFocada(null)
+                    alternarVisibilidade(false)
+                    break;
             default:
                 break;
         }
@@ -133,22 +129,20 @@ export const ListaSupensa = ({ titulo, opcoes }) => {
              onKeyDown={manipularTeclaDoTeclado}
         >
             <div>
-                {opcaoSelecionada ? opcaoSelecionada.text : 'Selecione'} 
+                { opcaoSelecionada ? opcaoSelecionada.text : 'Selecione' } 
             </div>
             <div>
                 <span>{estaAberta ? '▲' : '▼'}</span>
             </div>
         </BotaoEstilizado>
         {estaAberta && <ListaSuspensaEstilizada>
-            {opcoes.map((opcao, index) => 
-            <ItemListaSuspensaEstilizado 
-            focoAtivo={index === opcaoFocada} 
-            onClick={() => setOpcaoSelecionada(opcao)}
-            key={opcao.value}
-            >
+            {opcoes.map((opcao, index) => <ItemListaSuspensaEstilizado
+                key={opcao.value}
+                focoAtivo={index === opcaoFocada}
+                onClick={() => setOpcaoSelecionada(opcao)}
+                >
                 {opcao.text}
-            </ItemListaSuspensaEstilizado>
-            )}
+            </ItemListaSuspensaEstilizado>)}
         </ListaSuspensaEstilizada>}
     </LabelEstilizada>)
 }
