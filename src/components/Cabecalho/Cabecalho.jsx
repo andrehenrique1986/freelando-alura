@@ -6,9 +6,9 @@ const CabecalhoEstilizado = styled.header`
     justify-content: space-between;
     align-items: center;
     padding: ${props => props.theme.espacamentos.m}; 
-    margin-bottom: 80px;
     background:  ${props => props.theme.cores.primarias.a};
     height: 104px;
+    gap: 10px;
 `;
 
 export const Cabecalho = ({ children }) => {
