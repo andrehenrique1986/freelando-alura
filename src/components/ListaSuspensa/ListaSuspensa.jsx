@@ -2,7 +2,6 @@ import styled from "@emotion/styled"
 import { useState } from "react"
 
 
-
 const ListaSuspensaEstilizada = styled.ul`
     position: absolute;
     top: 100%;
@@ -44,7 +43,6 @@ const LabelEstilizada = styled.label`
     font-size: 20px;
     line-height: 24px;
     position: relative;
-
 `
 
 const BotaoEstilizado = styled.button`
